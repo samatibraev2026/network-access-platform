@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Платформа управления доступом к сетевым ресурсам</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-title">
+        <i class="fas fa-network-wired"></i>
+        <span>Управление доступом к сетевым ресурсам</span>
+      </div>
+      <nav class="role-nav">
+        <button class="role-btn active" data-role="user">
+          <i class="fas fa-user"></i> Пользователь
+        </button>
+        <button class="role-btn" data-role="security">
+          <i class="fas fa-shield-alt"></i> Офицер по ИБ
+        </button>
+        <button class="role-btn" data-role="itmanager">
+          <i class="fas fa-tools"></i> Менеджер ИТ
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- NOTIFICATION -->
+  <div id="notification" class="notification hidden"></div>
+
+  <!-- ===================== USER PANEL ===================== -->
+  <main id="panel-user" class="panel active">
+    <div class="container">
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-plus-circle"></i>
+          <h2>Подача заявки на доступ</h2>
+        </div>
+        <form id="requestForm" class="form">
+          <div class="form-group">
+            <label for="fullName">ФИО <span class="required">*</span></label>
+            <input type="text" id="fullName" placeholder="Иванов Иван Иванович" required />
+          </div>
+          <div class="form-group">
+            <label for="department">Подразделение <span class="required">*</span></label>
+            <input type="text" id="department" placeholder="Отдел разработки" required />
+          </div>
+          <div class="form-group">
+            <label for="resourceType">Тип ресурса <span class="required">*</span></label>
+            <select id="resourceType">
+              <option value="network_resource">Сетевой ресурс</option>
+              <option value="network_folder">Сетевая папка</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="resourceName">Название / путь ресурса <span class="required">*</span></label>
+            <input type="text" id="resourceName" placeholder="\\server\data или название ресурса" required />
+          </div>
+          <div class="form-group">
+            <label for="permissions">Требуемые права доступа <span class="required">*</span></label>
+            <select id="permissions">
+              <option value="Только чтение">Только чтение — просмотр файлов</option>
+              <option value="Чтение и изменение">Чтение и изменение — редактирование файлов</option>
+              <option value="Полный доступ">Полный доступ — включая удаление файлов</option>
+              <option value="Права администратора">Права администратора — полный контроль</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Подать заявку
+          </button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-history"></i>
+          <h2>История моих заявок</h2>
+        </div>
+        <div id="userRequests" class="requests-list">
+          <p class="empty-state"><i class="fas fa-inbox"></i> Заявок пока нет</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================== SECURITY PANEL ===================== -->
+  <main id="panel-security" class="panel">
+    <div class="container">
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-envelope-open-text"></i>
+          <h2>Входящие заявки <span id="securityBadge" class="badge hidden">0</span></h2>
+        </div>
+        <div id="securityInbox" class="requests-list">
+          <p class="empty-state"><i class="fas fa-check-circle"></i> Нет входящих заявок</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-list-alt"></i>
+          <h2>История всех заявок</h2>
+        </div>
+        <div id="securityHistory" class="requests-list">
+          <p class="empty-state"><i class="fas fa-inbox"></i> Заявок пока нет</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================== IT MANAGER PANEL ===================== -->
+  <main id="panel-itmanager" class="panel">
+    <div class="container">
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-tasks"></i>
+          <h2>Одобренные заявки <span id="itBadge" class="badge hidden">0</span></h2>
+        </div>
+        <div id="itInbox" class="requests-list">
+          <p class="empty-state"><i class="fas fa-check-circle"></i> Нет заявок к исполнению</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <i class="fas fa-clipboard-check"></i>
+          <h2>История исполненных заявок</h2>
+        </div>
+        <div id="itHistory" class="requests-list">
+          <p class="empty-state"><i class="fas fa-inbox"></i> Исполненных заявок нет</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
